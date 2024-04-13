@@ -28,13 +28,15 @@ const images = [
 
 const carouselImgElem = document.querySelector('.my-carousel-images');
 
+const thumbnailElem = document.querySelector('.my-thumbnails');
+
 images.forEach((curImg) => {
   const innerElem = `
   <div class="my-carousel-item" carousel-item="1">
     <img
       class="img-fluid"
       src="${curImg.image}"
-      alt="Marvel's Spiderman Miles Morale picture"
+      alt="${curImg.title}"
     />
     <div class="item-description px-3">
       <h2>${curImg.title}</h2>
@@ -43,21 +45,33 @@ images.forEach((curImg) => {
   </div>
   `;
 
+  const thumbnail = `
+    <img
+      class="img-fluid my-thumbnail"
+      src="${curImg.image}"
+      alt="Thumbnail of ${curImg.title}"
+    />
+  `;
+
   carouselImgElem.innerHTML += innerElem;
+  thumbnailElem.innerHTML += thumbnail;
 
 })
 
 const inners = document.querySelectorAll('.my-carousel-item');
-console.log(inners);
+
+const thumbnails = document.querySelectorAll('.my-thumbnail');
 
 let activeIndex = 0;
 
 inners[activeIndex].classList.add('active');
+thumbnails[activeIndex].classList.add('active');
 
 document.querySelector('.my-next').addEventListener('click', showNext);
 
 function showNext() {
   inners[activeIndex].classList.remove('active');
+  thumbnails[activeIndex].classList.remove('active');
 
   if (activeIndex < images.length - 1) {
     activeIndex++;
@@ -66,12 +80,14 @@ function showNext() {
   }
 
   inners[activeIndex].classList.add('active');
+  thumbnails[activeIndex].classList.add('active');
 }
 
 document.querySelector('.my-previous').addEventListener('click', showPrevious);
 
 function showPrevious() {
   inners[activeIndex].classList.remove('active');
+  thumbnails[activeIndex].classList.remove('active');
 
   if (activeIndex > 0) {
     activeIndex--;
@@ -80,4 +96,5 @@ function showPrevious() {
   }
 
   inners[activeIndex].classList.add('active');
+  thumbnails[activeIndex].classList.add('active');
 }

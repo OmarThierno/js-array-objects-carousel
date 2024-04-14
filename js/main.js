@@ -98,3 +98,43 @@ function showPrevious() {
   inners[activeIndex].classList.add('active');
   thumbnails[activeIndex].classList.add('active');
 }
+
+let clock = null;
+let isRunningRight = true;
+
+if (clock === null && isRunningRight) {
+  clock = setInterval(showNext, 3000);
+}
+
+document.getElementById('my-stop-button').addEventListener('click', () => {
+  if (clock !== null && isRunningRight) {
+    clearInterval(clock);
+    clock = null
+    isRunningRight = false;
+  } else if (clock === null && !isRunningRight){
+    clock = setInterval(showNext, 3000);
+    isRunningRight = true;
+  } else if (clock !== null && !isRunningRight) {
+    clearInterval(clock);
+    clock = null
+    isRunningRight = false;
+  }
+})
+
+document.getElementById('my-order-button').addEventListener('click', () => {
+  if (isRunningRight && clock !== null) {
+    clearInterval(clock);
+    clock = setInterval(showPrevious, 3000);
+    isRunningRight = false;
+  } else if (!isRunningRight && clock === null) {
+    clock = setInterval(showPrevious, 3000);
+    isRunningRight = false;
+  } else if (!isRunningRight && clock !== null) {
+    clearInterval(clock)
+    clock = setInterval(showNext, 3000);
+    isRunningRight = true;
+  } else {
+    clock = setInterval(showPrevious, 3000);
+    isRunningRight = true;
+  }
+})
